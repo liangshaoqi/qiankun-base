@@ -1,0 +1,30 @@
+.header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  .header-logo {
+
+  }
+  .header-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .header-menu-item {
+
+      >span {
+        display: inline-block;
+        height: 44px;
+        line-height: 44px;
+        padding: 0 8px;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.45);
+        &:hover {
+          border-radius: 12px;
+          background-color: rgba(0, 0, 0, 0.03);
+        }
+      }
+    }
+    
+  }
+}
