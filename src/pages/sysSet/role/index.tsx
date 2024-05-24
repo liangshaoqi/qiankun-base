@@ -2,8 +2,11 @@ import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, Dropdown, Space, Tag } from 'antd';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import request from 'umi-request';
+import { getRoles } from '@api/role'
+import { useQuery } from 'react-query'
+
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -148,6 +151,17 @@ const columns: ProColumns<GithubIssueItem>[] = [
 
 export default () => {
   const actionRef = useRef<ActionType>();
+  
+  const [enabled, setEnabled] = useState(false);
+  const { isLoading, isError, data, error, refetch } = useQuery(['roleLists', {
+    data: 1
+  }], getRoles, {
+    enabled
+  })
+
+  useEffect(() => {
+  }, [])
+
   return (
     <ProTable<GithubIssueItem>
       columns={columns}
@@ -207,6 +221,8 @@ export default () => {
           key="button"
           icon={<PlusOutlined />}
           onClick={() => {
+            // setEnabled(true)
+            refetch()
             actionRef.current?.reload();
           }}
           type="primary"

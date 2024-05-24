@@ -1,15 +1,15 @@
 import { extend, RequestOptionsInit } from 'umi-request'
 
 // 定义通用的响应格式
-interface ApiResponse<T = any> {
+export interface ApiResponse<T = any> {
   code: number;
   data: T;
-  message: string;
+  message?: string;
 }
 
 // 创建实例
 const request = extend({
-  prefix: '/api', // 统一的请求前缀
+  prefix: 'http://localhost:8088', // 统一的请求前缀
   timeout: 10000, // 超时时间
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -39,6 +39,19 @@ request.interceptors.response.use((response, options) => {
 export const get = async <T>(url: string, params?: Record<string, any>): Promise<ApiResponse<T>> => {
   return request.get(url, { params });
 }
+
+export const post = async <T>(url: string, data?: Record<string, any>): Promise<ApiResponse<T>> => {
+  return request.post(url, { data });
+};
+
+export const put = async <T>(url: string, data?: Record<string, any>): Promise<ApiResponse<T>> => {
+  return request.put(url, { data });
+};
+
+export const del = async <T>(url: string, params?: Record<string, any>): Promise<ApiResponse<T>> => {
+  return request.delete(url, { params });
+};
+
 
 
 // todo: 请求终止,错误处理
