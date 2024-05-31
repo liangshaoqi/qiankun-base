@@ -7,11 +7,12 @@ import {
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Header from "@components/Header";
-import components from '@/components'
+import components from "@/components";
 import { Outlet } from "react-router-dom";
 
+import { container } from "../registerMicroApps";
 const { Content, Sider } = Layout;
-const { Tabs } = components
+const { Tabs } = components;
 
 const items2: MenuProps["items"] = [
   UserOutlined,
@@ -41,7 +42,7 @@ const App: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout style={{ height: "100%" }} id={container}>
       <Header />
       <Layout>
         <Sider width={200}>
@@ -72,7 +73,7 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet></Outlet>
+            <Outlet />
           </Content>
         </Layout>
       </Layout>
