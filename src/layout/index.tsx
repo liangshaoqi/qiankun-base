@@ -8,33 +8,27 @@ import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Header from "@components/Header";
 import components from "@/components";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 import { container } from "../registerMicroApps";
+import KeepAliveOutlet from "./components/KeepAliveOutlet";
 const { Content, Sider } = Layout;
 const { Tabs } = components;
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+type MenuItem = Required<MenuProps>['items'][number];
+const items: MenuItem[] = [
+  {
+    key: '/role',
+    label: <Link to='/role'>角色</Link>,
+  },
+  {
+    key: '/sys',
+    label: <Link to='/sys'>系统</Link>,
+  },
+  {
+    key: '/react-app',
+    label: <Link to='/react-app'>react</Link>,
+  },
+]
 
 const App: React.FC = () => {
   const {
@@ -51,7 +45,7 @@ const App: React.FC = () => {
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             style={{ height: "100%", borderRight: 0, overflow: "auto" }}
-            items={items2}
+            items={items}
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
@@ -73,7 +67,8 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet />
+            {/* <Outlet /> */}
+            <KeepAliveOutlet />
           </Content>
         </Layout>
       </Layout>

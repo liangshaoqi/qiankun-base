@@ -44,7 +44,7 @@ const subapps: ISubapps[] = [
   }
 ]
 
-
+// todo: 手动控制子应用销毁?结合缓存?
 
 // 根据名称生成apps
 function getApps(): IApps[] {

@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, useMemo } from "react";
+import Loading from "@/components/Loading";
+import { useOutlet, useLocation, Outlet } from "react-router-dom";
+import KeepAlive from "react-activation";
+interface Props {}
 
-interface Props {
-  
-}
+function KeepAliveOutlet() {
+  const outlet = useOutlet();
+  const location = useLocation()
+  const { pathname, search } = location
 
-const ComponentName: React.FC<Props> = (props) => {
+  const active = useMemo(() => {
+    return pathname + search
+  }, [pathname, search])
 
-  const {} = props
-
-  const [] = useState()
-
-  useEffect(() => {}, [])
+  const currentRoute = useMemo(() => {
+    return 
+  }, [active])
 
   return (
-    <div>
-      组件模版
-    </div>
+    <Suspense fallback={<Loading />}>
+      {outlet}
+    </Suspense>
   );
-};
+}
 
-export default ComponentName;
+export default KeepAliveOutlet;
