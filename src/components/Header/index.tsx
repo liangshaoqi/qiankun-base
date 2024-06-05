@@ -2,6 +2,7 @@ import { Layout, Button, Dropdown, Space } from 'antd';
 import React, { useState, useEffect } from 'react';
 import './index.scss'
 import type { MenuProps } from 'antd';
+import { useNavigate } from "react-router-dom"
 
 const { Header } = Layout;
 
@@ -12,6 +13,8 @@ interface Props {
 const HeaderComponent: React.FC<Props> = (props) => {
 
   const {} = props
+
+  const navigate = useNavigate()
 
   const [] = useState()
 
@@ -31,6 +34,9 @@ const HeaderComponent: React.FC<Props> = (props) => {
           退出登录
         </a>
       ),
+      onClick: () => {
+        navigate('/login')
+      }
     },
   ]
 
