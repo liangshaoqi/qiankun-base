@@ -49,14 +49,14 @@ const App: React.FC = () => {
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
-          <Breadcrumb
+          {/* <Breadcrumb
             style={{ margin: "8px 0" }}
             items={[
               { title: "sample" },
               { title: "sample" },
               { title: "sample" },
             ]}
-          ></Breadcrumb>
+          ></Breadcrumb> */}
           <Tabs></Tabs>
           <Content
             style={{

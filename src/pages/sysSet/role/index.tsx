@@ -160,6 +160,7 @@ export default () => {
   })
 
   useEffect(() => {
+    console.log('role渲染')
   }, [])
 
   return (

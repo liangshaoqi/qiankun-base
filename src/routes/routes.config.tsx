@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 import Role from "@pages/sysSet/role";
 import User from "@pages/sysSet/user";
 import KeepAlive from "react-activation";
+import { Input } from 'antd'
 
 // 纯路由管理
 const routes: RouteObject[] = [
@@ -17,7 +18,7 @@ const routes: RouteObject[] = [
     path: "/sys",
     element: (
       <KeepAlive cacheKey="sys">
-        <div><input type="text" /></div>
+        <div><Input type="text" /></div>
       </KeepAlive>
     ),
   },
