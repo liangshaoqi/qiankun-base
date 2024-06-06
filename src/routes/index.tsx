@@ -1,12 +1,9 @@
-import { useEffect} from 'react';
-
 import { BrowserRouter, Routes, Route,  } from "react-router-dom";
 import Layout from "@/layout";
 import Login from "@/pages/login";
 import routes from "./routes.config";
 import { apps } from "@/registerMicroApps";
 import { AliveScope, KeepAlive } from "react-activation";
-import {loadMicroApp} from 'qiankun';
 
 interface SubAppProps {
   name: string;

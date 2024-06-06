@@ -102,8 +102,8 @@ const TabsComponent: React.FC = (props) => {
         const activeAppItem =  loadedApps.find((item) => item.key === activeApp.activeRule)
         if (activeAppItem) {
           activeAppItem.unmount()
+          setLoadedApps(loadedApps.filter(item => item !== activeAppItem))
         }
-        setLoadedApps(loadedApps.filter(item => item !== activeAppItem))
       }
       // todo: 如果当前路由是关闭的路由则选中最后一个,并跳转到对应的路由中去,这里等待首页确定之后添加
       // 移除
@@ -130,7 +130,6 @@ const TabsComponent: React.FC = (props) => {
       items={items}
       onEdit={onEdit}
       onChange={onChange}
-
     >
       标签页
     </Tabs>
