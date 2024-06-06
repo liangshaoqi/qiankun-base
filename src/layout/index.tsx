@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import Header from "@components/Header";
 import components from "@/components";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { container } from "../registerMicroApps";
 import KeepAliveOutlet from "./components/KeepAliveOutlet";
