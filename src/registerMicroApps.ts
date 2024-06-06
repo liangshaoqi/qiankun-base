@@ -60,6 +60,6 @@ function getApps(): IApps[] {
 // 抛出子应用配置
 export const apps: IApps[] = getApps()
 
-registerMicroApps(apps)
+// registerMicroApps(apps)
 
 start();
