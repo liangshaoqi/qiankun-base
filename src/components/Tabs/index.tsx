@@ -3,7 +3,8 @@ import type { TabsProps } from "antd";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { apps } from "@/registerMicroApps";
-import {loadMicroApp} from 'qiankun';
+import { loadMicroApp } from "qiankun";
+import { useAliveController } from "react-activation";
 
 import "./index.scss";
 
@@ -14,43 +15,27 @@ interface ItemsProps {
 const TabsComponent: React.FC = (props) => {
   const {} = props;
 
+  const { drop } = useAliveController();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [loadedApps, setLoadedApps] = useState<any[]>([])
-  const [items, setItems] = useState<TabsProps["items"]>([
-    // {
-    //   label: 'Tab 1',
-    //   key: '1',
-    // }
-    // {
-    //   label: 'Tab 1',
-    //   key: '1',
-    // },
-    // {
-    //   label: 'Tab 2',
-    //   key: '2',
-    // },
-    // {
-    //   label: 'Tab 3',
-    //   key: '3',
-    // },
-    // {
-    //   label: 'Tab 4',
-    //   key: '4',
-    // },
-  ]);
+  const [loadedApps, setLoadedApps] = useState<any[]>([]);
+  const [items, setItems] = useState<TabsProps["items"]>([]);
+  const [currentPath, setCurrentPath] = useState("");
 
   useEffect(() => {
     console.log("tabs useEffect");
   }, []);
 
   useEffect(() => {
-    const { pathname } = location;
-    console.log("监听路由变化: ", location);
-    setTabsItems(pathname);
+    init();
   }, [location, items]);
 
+  const init = async () => {
+    const { pathname } = location;
+    setCurrentPath(pathname);
+    setTabsItems(pathname);
+  };
 
   // 根据路由变化设置tabs数据
   const setTabsItems = (pathname: string) => {
@@ -59,15 +44,15 @@ const TabsComponent: React.FC = (props) => {
       // todo: 取menu中的label作为数据
       const label = pathname;
       // 如果路由是微前端路由，手动加载微前端
-      const activeApp = apps.find((tab) => tab.activeRule === pathname)
+      const activeApp = apps.find((tab) => tab.activeRule === pathname);
       if (activeApp) {
         const loadedApp = loadMicroApp(activeApp);
         const newApp = {
           key: pathname,
-          ...loadedApp
-        }
+          ...loadedApp,
+        };
         // 缓存已加载子应用
-        setLoadedApps([...loadedApps, newApp])
+        setLoadedApps([...loadedApps, newApp]);
       }
       setItems((prevTabs) => {
         if (prevTabs) {
@@ -94,19 +79,19 @@ const TabsComponent: React.FC = (props) => {
     targetKey: React.MouseEvent | React.KeyboardEvent | string,
     action: "add" | "remove"
   ) => {
-    console.log(action, targetKey);
     if (action === "remove") {
+      drop(targetKey as string);
       // 如果路由是子应用路由，则手动移除子应用
-      const activeApp = apps.find((app) => app.activeRule === targetKey)
+      const activeApp = apps.find((app) => app.activeRule === targetKey);
       if (activeApp) {
-        const activeAppItem =  loadedApps.find((item) => item.key === activeApp.activeRule)
+        const activeAppItem = loadedApps.find(
+          (item) => item.key === activeApp.activeRule
+        );
         if (activeAppItem) {
-          activeAppItem.unmount()
-          setLoadedApps(loadedApps.filter(item => item !== activeAppItem))
+          activeAppItem.unmount();
+          setLoadedApps(loadedApps.filter((item) => item !== activeAppItem));
         }
       }
-      // todo: 如果当前路由是关闭的路由则选中最后一个,并跳转到对应的路由中去,这里等待首页确定之后添加
-      // 移除
       setItems((prevTabs) => {
         if (prevTabs) {
           return prevTabs.filter((tab) => tab.key !== targetKey);
@@ -114,16 +99,28 @@ const TabsComponent: React.FC = (props) => {
           return [];
         }
       });
+      const pathArr =
+        items
+          ?.filter((node) => node.key !== targetKey)
+          .map((item) => item.key) || [];
+      const nextPath = pathArr[pathArr.length - 1];
+      const { pathname } = location;
+      if (targetKey !== pathname) {
+        return;
+      }
+
+      navigate(nextPath, {});
     }
   };
 
   const onChange = (newActiveKey: string) => {
-    console.log(newActiveKey)
-    navigate(newActiveKey)
-  }
+    console.log(newActiveKey);
+    navigate(newActiveKey);
+  };
 
   return (
     <Tabs
+      activeKey={currentPath}
       className="ch-tabs"
       hideAdd
       type="editable-card"

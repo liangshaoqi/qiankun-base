@@ -1,9 +1,14 @@
 import React from "react";
+import {
+  LaptopOutlined,
+  NotificationOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
 import Header from "@components/Header";
 import components from "@/components";
-import { Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 import { container } from "../registerMicroApps";
 import KeepAliveOutlet from "./components/KeepAliveOutlet";
@@ -18,6 +23,10 @@ const items: MenuItem[] = [
   {
     key: '/sys',
     label: <Link to='/sys'>系统</Link>,
+  },
+  {
+    key: '/test',
+    label: <Link to='/test'>测试</Link>,
   },
   {
     key: '/react-app',
@@ -44,14 +53,6 @@ const App: React.FC = () => {
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
-          {/* <Breadcrumb
-            style={{ margin: "8px 0" }}
-            items={[
-              { title: "sample" },
-              { title: "sample" },
-              { title: "sample" },
-            ]}
-          ></Breadcrumb> */}
           <Tabs></Tabs>
           <Content
             style={{
